@@ -98,21 +98,17 @@ int copier_prochain_champ(char dst[], int taille, CH50 ligne, int decalage)
 {
 
     int i;
-    printf("dans la fonction copie prochaine ligne = %s\n", ligne);
     for (i = decalage; i < decalage + taille; ++i)
     {
-        /* code */
-
         if (est_un_espace(ligne[i]))
         {
             break;
         }
-        printf("ligne[i] = %c\n", ligne[i]);
 
-        dst[i] = ligne[i];
+        dst[i-decalage] = ligne[i];
     }
 
-    dst[i] = '\0';
+    dst[i-decalage] = '\0';
 
     return i; // indice du prochain caractère à traiter
 }
@@ -136,20 +132,14 @@ Personne personne_creer(CH50 ligne)
      */
 
     Personne p;
-    
 
     // lire le nom
     int prochain_decalage = copier_prochain_champ(p.nom, 30, ligne, 0) + 1;
 
-
-    // lire le prenom
-    printf("prochain decalage pour le prenom = %d\n", prochain_decalage);
-    printf("sizeof(p.pnom) = %d\n", sizeof(p.pnom));
-
+    // lire le prénom
     prochain_decalage = copier_prochain_champ(p.pnom, 20, ligne, prochain_decalage) + 1;
 
     // lire le téléphone
-    printf("prochain decalage pour le tel = %d\n", prochain_decalage);
     p.tel = strtoul(&(ligne[prochain_decalage]), NULL, 10);
 
     return p;
